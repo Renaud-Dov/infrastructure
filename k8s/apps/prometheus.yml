@@ -1,0 +1,53 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: monitoring
+  project: default
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts/
+      chart: kube-prometheus-stack
+      targetRevision: 58.3.3
+      helm:
+        values: |
+          grafana:
+            enabled: false
+          prometheusOperator:
+            tls:
+              enabled: false
+            admissionWebhooks:
+              enabled: false
+            resources:
+              requests:
+                memory: 500Mi
+                cpu: 500m
+              limits:
+                memory: 1Gi
+                cpu: 1
+          prometheus:
+            prometheusSpec:
+              resources:
+              requests:
+                  memory: 500Mi
+                  cpu: 500m
+              limits:
+                  memory: 1Gi
+                  cpu: 1
+              ruleSelectorNilUsesHelmValues: false
+              serviceMonitorSelectorNilUsesHelmValues: false
+              podMonitorSelectorNilUsesHelmValues: false
+              probeSelectorNilUsesHelmValues: false
+              scrapeConfigSelectorNilUsesHelmValues: false

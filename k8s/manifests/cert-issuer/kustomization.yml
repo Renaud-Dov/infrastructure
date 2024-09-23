@@ -1,0 +1,7 @@
+---
+kind: Kustomization
+namespace: cert-manager
+
+resources:
+  - cert-issuer.yml
+  - secret.yml

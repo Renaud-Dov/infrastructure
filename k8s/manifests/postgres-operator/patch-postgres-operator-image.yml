@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-operator
+spec:
+  template:
+    spec:
+      containers:
+        - name: postgres-operator
+          # we need a ARM image not available on defaut registry
+          image: ghcr.io/zalando/postgres-operator:v1.10.0

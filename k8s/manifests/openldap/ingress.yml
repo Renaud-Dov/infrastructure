@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openldap
+  annotations:
+    cert-manager.io/cluster-issuer: default-issuer
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  rules:
+    - host: ldap.bugbear.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: openldap-service
+                port:
+                  name: openldap-ldaps
+  tls:
+    - hosts:
+        - ldap.bugbear.fr
+      secretName: ldap-tls

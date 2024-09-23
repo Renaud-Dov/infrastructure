@@ -1,0 +1,39 @@
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: bugbear-main-cluster-master
+  labels:
+    application: spilo
+    spilo-role: master
+spec:
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: exporter
+      interval: 15s
+      scrapeTimeout: 10s
+  selector:
+    matchLabels:
+      application: spilo
+      spilo-role: master
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: bugbear-main-cluster-replica
+  labels:
+    application: spilo
+    spilo-role: replica
+spec:
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: exporter
+      interval: 15s
+      scrapeTimeout: 10s
+  selector:
+    matchLabels:
+      application: spilo
+      spilo-role: replica

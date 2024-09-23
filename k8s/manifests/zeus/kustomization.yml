@@ -1,0 +1,7 @@
+---
+kind: Kustomization
+namespace: zeus
+
+resources:
+  - deployment.yml
+  - secrets.yml

@@ -1,0 +1,12 @@
+---
+kind: Kustomization
+namespace: hermes
+
+resources:
+  - deployment.yml
+  - secrets.yml
+
+images:
+  - name: hermes
+    newName: ghcr.io/renaud-dov/hermes
+    newTag: 2.3.0

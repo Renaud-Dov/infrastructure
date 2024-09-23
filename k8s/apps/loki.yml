@@ -1,0 +1,157 @@
+# yamllint disable rule:line-length
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  labels:
+    app: logging
+    component: loki
+spec:
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: grafana
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: loki
+      targetRevision: 5.42.1
+      helm:
+        values: |
+          fullnameOverride: loki
+          gateway:
+            enabled: false
+          ingress:
+            enabled: true
+            annotations:
+              cert-manager.io/cluster-issuer: default-issuer
+              nginx.ingress.kubernetes.io/auth-type: basic
+              nginx.ingress.kubernetes.io/auth-secret: loki-auth-map
+              nginx.ingress.kubernetes.io/auth-secret-type: auth-map
+              nginx.ingress.kubernetes.io/proxy-body-size: 10m
+            hosts:
+              - loki.bugbear.fr
+            tls:
+              - hosts:
+                  - loki.bugbear.fr
+                secretName: loki-tls
+          #        singleBinary:
+          #          replicas: 1
+          
+          test:
+            enabled: false
+          minio:
+            enabled: false
+          
+          write:
+            resources:
+              requests:
+                memory: 50Mi
+              limits:
+                memory: 50Mi
+            affinity: {}
+            extraEnv:
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: s3-loki-credentials
+                    key: AWS_ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: s3-loki-credentials
+                    key: AWS_SECRET_ACCESS_KEY
+          read:
+            legacyReadTarget: true  # default for now, false adds "backend"
+            resources:
+              requests:
+                memory: 50Mi
+              limits:
+                memory: 50Mi
+            affinity: {}
+            extraEnv:
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: s3-loki-credentials
+                    key: AWS_ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: s3-loki-credentials
+                    key: AWS_SECRET_ACCESS_KEY
+          
+          loki:
+            env:
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: s3-loki-credentials
+                    key: AWS_ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: s3-loki-credentials
+                    key: AWS_SECRET_ACCESS_KEY
+            auth_enabled: false
+            commonConfig:
+              replication_factor: 3
+            limits_config:
+              max_query_lookback: 744h
+              retention_period: 744h
+            compactor:
+              shared_store: s3
+              retention_enabled: true
+            storage:
+              bucket_name: s3.bugbear
+              type: s3
+              s3:
+                region: de
+                endpoint: s3.de.io.cloud.ovh.net
+                s3ForcePathStyle: true
+              bucketNames:
+                chunks: s3.bugbear
+                ruler: s3.bugbear
+                admin: s3.bugbear
+            #            ingester:
+            #              autoforget_unhealthy: true
+            schema_config:
+              configs:
+                - from: 2024-01-01
+                  store: boltdb-shipper
+                  object_store: s3
+                  schema: v12
+                  index:
+                    prefix: index_
+                    period: 24h
+    - repoURL: https://gitlab.com/dov_bugbear/infrastructure.git
+      targetRevision: HEAD
+      path: k8s/manifests/grafana/loki
+
+#        monitoring:
+#          lokiCanary:
+#            resources:
+#              requests:
+#                memory: 40Mi
+#              limits:
+#                memory: 40Mi
+#        write:
+#          resources:
+#            requests:
+#              memory: 50Mi
+#            limits:
+#              memory: 50Mi
+#        read:
+#          legacyReadTarget: true  # default for now, false adds "backend"
+#          resources:
+#            requests:
+#              memory: 50Mi
+#            limits:
+#              memory: 50Mi
+

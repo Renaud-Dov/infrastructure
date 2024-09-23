@@ -1,0 +1,26 @@
+---
+kind: Kustomization
+namespace: argocd
+
+resources:
+  - argocd.yml
+  - secrets.yml
+  - ingress-ngnix.yml
+  - cert-manager.yml
+  - default-issuer.yml
+  - postgres-operator.yml
+  - hermes.yml
+  - postgres.yml
+  - grafana.yml
+  - external-dns.yml
+  - portfolio.yml
+  - prometheus.yml
+  - loki.yml
+  - uptime.yml
+  - promtail.yml
+  - zeus.yml
+  - keycloak.yml
+  - minio.yml
+  - openldap.yml
+  - vault.yml
+  - vault-secrets-operator.yml

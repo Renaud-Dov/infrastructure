@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps
+
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: apps
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: argocd
+  project: default
+  source:
+    repoURL: https://gitlab.com/dov_bugbear/infrastructure.git
+    targetRevision: HEAD
+    path: k8s/apps

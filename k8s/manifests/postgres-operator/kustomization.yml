@@ -1,0 +1,11 @@
+---
+kind: Kustomization
+namespace: postgres-operator
+
+resources:
+  - namespace.yml
+  - github.com/zalando/postgres-operator/manifests?ref=v1.10.0
+
+patches:
+  - path: patch-postgres-operator-cm.yml
+  - path: patch-postgres-operator-image.yml

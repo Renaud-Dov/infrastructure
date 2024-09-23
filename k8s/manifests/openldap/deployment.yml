@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openldap-deployment
+  labels:
+    app: openldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openldap
+  template:
+    metadata:
+      labels:
+        app: openldap
+    spec:
+
+      containers:
+        - name: openldap
+          image: bugbeardov/toto:arm
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1389
+              name: openldap-ldap
+            - containerPort: 1636
+              name: openldap-ldaps
+          volumeMounts:
+            - name: openldap-data
+              mountPath: /bitnami/openldap
+            - name: openldap-tls
+              mountPath: /etc/secrets/openldap-tls
+          envFrom:
+            - configMapRef:
+                name: openldap-config
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+      volumes:
+        - name: openldap-data
+        - name: openldap-tls
+          secret:
+            secretName: openldap-tls
+
+

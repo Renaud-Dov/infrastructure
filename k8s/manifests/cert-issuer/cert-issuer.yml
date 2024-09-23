@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: default-issuer
+  namespace: cert-manager
+spec:
+  acme:
+    email: dov.devers@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: default-issuer-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            email: dov.devers@gmail.com
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
+      # - http01:
+      #     ingress:
+      #       class: public

@@ -1,0 +1,9 @@
+---
+kind: Kustomization
+namespace: postgres
+
+resources:
+  - namespace.yml
+  - postgres.yml
+  - service.yml
+  - service-monitors.yml

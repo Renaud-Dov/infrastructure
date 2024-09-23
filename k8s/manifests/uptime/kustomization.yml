@@ -1,0 +1,8 @@
+---
+kind: Kustomization
+namespace: uptime
+
+resources:
+  - deployment.yml
+  - ingress.yml
+  - service.yml

@@ -1,0 +1,7 @@
+---
+kind: Kustomization
+namespace: external-dns
+
+resources:
+  - deployment.yml
+  - secrets.yml

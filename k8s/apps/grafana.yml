@@ -1,0 +1,110 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: grafana
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: grafana
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: grafana
+    targetRevision: 7.0.6
+    helm:
+      values: |
+        fullnameOverride: grafana
+        replicas: 1
+        resources:
+          requests:
+            memory: 300Mi
+          limits:
+            memory: 500Mi
+        rbac:
+          namespaced: true
+          pspEnabled: false
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - grafana
+                  topologyKey: kubernetes.io/hostname
+        grafana.ini:
+          server:
+            root_url: https://grafana.bugbear.fr/
+          users:
+            auto_assign_org_role: Viewer
+  
+          auth:
+            oauth_auto_login: false
+            disable_login_form: false
+            oauth_allow_insecure_email_lookup: true
+          auth.generic_oauth:
+            name: Keycloak
+            enabled: true
+            allow_sign_up: true
+            client_id: $__file{/etc/secrets/auth_oidc/client_id}
+            client_secret: $__file{/etc/secrets/auth_oidc/client_secret}
+            scopes: openid email profile offline_access roles
+            email_attribute_path: email
+            login_attribute_path: username
+            name_attribute_path: full_name
+            auth_url: https://auth.bugbear.fr/realms/bugbear/protocol/openid-connect/auth
+            token_url: https://auth.bugbear.fr/realms/bugbear/protocol/openid-connect/token
+            api_url: https://auth.bugbear.fr/realms/bugbear/protocol/openid-connect/userinfo
+            allow_assign_grafana_admin: true
+            role_attribute_path: contains(roles[*], 'grafana-super-admin') && 'GrafanaAdmin' || contains(roles[*], 'grafana-admin') && 'Admin' || contains(roles[*], 'grafana-editor') && 'Editor' || contains(roles[*], 'grafana-viewer') && 'Viewer' || 'Viewer'
+        
+        extraSecretMounts:
+          - name: grafana-auth-oidc
+            secretName: grafana-auth-oidc
+            defaultMode: 0440
+            mountPath: /etc/secrets/auth_oidc
+  
+        persistence:
+          enabled: true
+          type: statefulset
+          accessModes:
+            - ReadWriteOnce
+          size: 2Gi
+        sidecar:
+          resources:
+            requests:
+              memory: 100Mi
+            limits:
+              memory: 100Mi
+          dashboards:
+            enabled: false
+            datasources:
+              enabled: true
+              defaultDatasourceEnabled: false
+              label: grafana_datasource
+              searchNamespace: ALL
+        ingress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: default-issuer
+            cert-manager.io/revision-history-limit: "1"
+          hosts:
+            - grafana.bugbear.fr
+          tls:
+            - hosts:
+                - grafana.bugbear.fr
+              secretName: grafana-tls

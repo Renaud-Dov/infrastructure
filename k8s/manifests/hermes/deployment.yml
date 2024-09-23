@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes-deployment
+  labels:
+    app: hermes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hermes
+  template:
+    metadata:
+      labels:
+        app: hermes
+    spec:
+      containers:
+        - name: hermes-acdc
+          image: hermes
+          env:
+            - name: QUARKUS_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hermes.hermes.bugbear-main-cluster.credentials
+                  key: username
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hermes.hermes.bugbear-main-cluster.credentials
+                  key: password
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://bugbear-main-cluster.postgres.svc.cluster.local/hermes2
+            - name: DISCORD_CLIENT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hermes-secrets
+                  key: acdc_token
+        - name: hermes-asm
+          image: hermes
+          env:
+            - name: QUARKUS_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hermes.hermes.bugbear-main-cluster.credentials
+                  key: username
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hermes.hermes.bugbear-main-cluster.credentials
+                  key: password
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://bugbear-main-cluster.postgres.svc.cluster.local/hermes2
+            - name: DISCORD_CLIENT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hermes-secrets
+                  key: asm_token

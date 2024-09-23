@@ -1,0 +1,14 @@
+---
+kind: Kustomization
+
+resources:
+  - pvc.yml
+  - secrets.yml
+  - deployment.yml
+  - service.yml
+  - ingress.yml
+
+images:
+  - name: minio
+    newName: minio/minio
+    newTag: RELEASE.2024-05-01T01-11-10Z

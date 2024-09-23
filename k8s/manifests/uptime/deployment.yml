@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-deployment
+  labels:
+    app: uptime
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime
+  template:
+    metadata:
+      labels:
+        app: uptime
+    spec:
+      containers:
+        - name: uptime
+
+          image: louislam/uptime-kuma:1
+          ports:
+            - containerPort: 3001 # 3000
+              name: http
+          volumeMounts:
+            - mountPath: /app/data
+              name: uptime-data
+      volumes:
+        - name: uptime-data
+

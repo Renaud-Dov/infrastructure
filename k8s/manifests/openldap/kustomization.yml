@@ -1,0 +1,26 @@
+---
+kind: Kustomization
+namespace: openldap
+
+resources:
+  - certificate.yml
+  - secret.yml
+  - deployment.yml
+  - service.yml
+  - ingress.yml
+
+
+configMapGenerator:
+  - name: openldap-config
+    literals:
+      - LDAP_ROOT=dc=forge,dc=epita,dc=fr
+      - LDAP_ENABLE_ACCESSLOG=yes
+      - LDAP_ADMIN_USERNAME=admin # TODO: Change this
+      - LDAP_ADMIN_PASSWORD=adminpassword
+      - LDAP_ENABLE_TLS=yes
+      - LDAP_TLS_CERT_FILE=/etc/secrets/openldap-tls/tls.crt
+      - LDAP_TLS_KEY_FILE=/etc/secrets/openldap-tls/tls.key
+      - LDAP_TLS_CA_FILE=/etc/ssl/certs/ca-certificates.crt
+      - LDAP_EXTRA_SCHEMAS=cosine, inetorgperson, nis
+      - BITNAMI_DEBUG=true
+

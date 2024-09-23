@@ -1,0 +1,60 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promtail
+  labels:
+    app: logging
+    component: promtail
+
+spec:
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: grafana
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: promtail
+    targetRevision: 6.15.5
+    helm:
+      values: |
+        fullnameOverride: promtail
+        
+        serviceMonitor:
+          enabled: true
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            memory: 300Mi
+
+        config:
+          clients:
+            - url: http://loki-write.grafana.svc.cluster.local:3100/loki/api/v1/push
+            #                  basic_auth:
+            #                    username: "${USERNAME}"
+            #                    password: "${PASSWORD}"
+
+          extraScrapeConfigs:
+            - job_name: journal
+              journal:
+                path: /var/log/journal
+                max_age: 12h
+                labels:
+                  job: systemd-journal
+              relabel_configs:
+                - source_labels: ['__journal__systemd_unit']
+                  target_label: unit
+                - source_labels: ['__journal__hostname']
+                  target_label: hostname
+
+        extraArgs:
+          - -config.expand-env=true
+

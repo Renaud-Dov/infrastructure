@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openldap
+
+spec:
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: openldap
+  source:
+    repoURL: https://gitlab.com/dov_bugbear/infrastructure.git
+    targetRevision: HEAD
+    path: k8s/manifests/openldap
