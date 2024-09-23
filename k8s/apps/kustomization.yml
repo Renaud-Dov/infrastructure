@@ -12,7 +12,7 @@ resources:
   - hermes.yml
   - postgres.yml
   - grafana.yml
-  - external-dns.yml
+#  - external-dns.yml
   - portfolio.yml
   - prometheus.yml
   - loki.yml
