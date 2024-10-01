@@ -109,16 +109,15 @@ spec:
               shared_store: s3
               retention_enabled: true
             storage:
-              bucket_name: s3.bugbear
+              bucket_name: loki-bucket
               type: s3
               s3:
-                region: de
-                endpoint: s3.de.io.cloud.ovh.net
+                endpoint: s3.bugbear.fr
                 s3ForcePathStyle: true
               bucketNames:
-                chunks: s3.bugbear
-                ruler: s3.bugbear
-                admin: s3.bugbear
+                chunks: loki-bucket
+                ruler: loki-bucket
+                admin: loki-bucket
             #            ingester:
             #              autoforget_unhealthy: true
             schema_config:
