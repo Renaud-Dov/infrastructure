@@ -26,7 +26,7 @@ spec:
         values: |
           fullnameOverride: loki
           gateway:
-            enabled: true
+            enabled: false
           ingress:
             enabled: true
             annotations:
@@ -41,8 +41,9 @@ spec:
               - hosts:
                   - loki.bugbear.fr
                 secretName: loki-tls
-          #        singleBinary:
-          #          replicas: 1
+          deploymentMode: SingleBinary
+          singleBinary:
+            replicas: 1
           
           test:
             enabled: false
@@ -50,131 +51,29 @@ spec:
             enabled: false
           
           write:
-            resources:
-              requests:
-                memory: 50Mi
-              limits:
-                memory: 50Mi
-            affinity: {}
-            extraEnv:
-              - name: AWS_ACCESS_KEY_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: s3-loki-credentials
-                    key: AWS_ACCESS_KEY_ID
-              - name: AWS_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: s3-loki-credentials
-                    key: AWS_SECRET_ACCESS_KEY
-              - name: AWS_SDK_LOAD_CONFIG
-                value: "1"
+            replicas: 0
           read:
-            legacyReadTarget: true  # default for now, false adds "backend"
-            resources:
-              requests:
-                memory: 50Mi
-              limits:
-                memory: 50Mi
-            affinity: {}
-            extraEnv:
-              - name: AWS_ACCESS_KEY_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: s3-loki-credentials
-                    key: AWS_ACCESS_KEY_ID
-              - name: AWS_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: s3-loki-credentials
-                    key: AWS_SECRET_ACCESS_KEY
-              - name: AWS_SDK_LOAD_CONFIG
-                value: "1"
+            replicas: 0
           backend:
-              replicas: 2
-              resources:
-                requests:
-                  memory: 500Mi
-                limits:
-                  memory: 500Mi
-              extraEnv:
-                - name: AWS_ACCESS_KEY_ID
-                  valueFrom:
-                    secretKeyRef:
-                      key: AWS_ACCESS_KEY_ID
-                      name: s3-loki-credentials
-                - name: AWS_SECRET_ACCESS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      key: AWS_SECRET_ACCESS_KEY
-                      name: s3-loki-credentials
-                - name: AWS_SDK_LOAD_CONFIG
-                  value: "1"
+            replicas: 0
           
           loki:
-            env:
-              - name: AWS_ACCESS_KEY_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: s3-loki-credentials
-                    key: AWS_ACCESS_KEY_ID
-              - name: AWS_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: s3-loki-credentials
-                    key: AWS_SECRET_ACCESS_KEY
-            auth_enabled: false
             commonConfig:
-              replication_factor: 3
+              replication_factor: 1
             limits_config:
               max_query_lookback: 744h
               retention_period: 744h
-            compactor:
-              shared_store: s3
-              retention_enabled: true
             storage:
-              bucket_name: loki-bucket
-              type: s3
-              s3:
-                endpoint: s3.bugbear.fr
-                s3ForcePathStyle: true
-              bucketNames:
-                chunks: loki-bucket
-                ruler: loki-bucket
-                admin: loki-bucket
-            #            ingester:
-            #              autoforget_unhealthy: true
+              type: 'filesystem'
             schema_config:
               configs:
                 - from: 2024-01-01
-                  store: boltdb-shipper
-                  object_store: s3
-                  schema: v12
+                  store: tsdb
+                  object_store: filesystem
+                  schema: v13
                   index:
-                    prefix: index_
+                    prefix: loki_index_
                     period: 24h
     - repoURL: https://gitlab.com/dov_bugbear/infrastructure.git
       targetRevision: HEAD
       path: k8s/manifests/grafana/loki
-
-#        monitoring:
-#          lokiCanary:
-#            resources:
-#              requests:
-#                memory: 40Mi
-#              limits:
-#                memory: 40Mi
-#        write:
-#          resources:
-#            requests:
-#              memory: 50Mi
-#            limits:
-#              memory: 50Mi
-#        read:
-#          legacyReadTarget: true  # default for now, false adds "backend"
-#          resources:
-#            requests:
-#              memory: 50Mi
-#            limits:
-#              memory: 50Mi
-
