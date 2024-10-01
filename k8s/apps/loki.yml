@@ -67,6 +67,8 @@ spec:
                   secretKeyRef:
                     name: s3-loki-credentials
                     key: AWS_SECRET_ACCESS_KEY
+              - name: AWS_SDK_LOAD_CONFIG
+                value: "1"
           read:
             legacyReadTarget: true  # default for now, false adds "backend"
             resources:
@@ -86,6 +88,28 @@ spec:
                   secretKeyRef:
                     name: s3-loki-credentials
                     key: AWS_SECRET_ACCESS_KEY
+              - name: AWS_SDK_LOAD_CONFIG
+                value: "1"
+          backend:
+              replicas: 2
+              resources:
+                requests:
+                  memory: 500Mi
+                limits:
+                  memory: 500Mi
+              extraEnv:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      key: AWS_ACCESS_KEY_ID
+                      name: s3-loki-credentials
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      key: AWS_SECRET_ACCESS_KEY
+                      name: s3-loki-credentials
+                - name: AWS_SDK_LOAD_CONFIG
+                  value: "1"
           
           loki:
             env:
