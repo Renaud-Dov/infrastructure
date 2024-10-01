@@ -26,7 +26,7 @@ spec:
         values: |
           fullnameOverride: loki
           gateway:
-            enabled: false
+            enabled: true
           ingress:
             enabled: true
             annotations:
