@@ -63,6 +63,7 @@ spec:
             limits_config:
               max_query_lookback: 744h
               retention_period: 744h
+            auth_enabled: false
             storage:
               type: 'filesystem'
             schema_config:
