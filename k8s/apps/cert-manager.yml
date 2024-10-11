@@ -24,3 +24,6 @@ spec:
     helm:
       values: |
         installCRDs: true
+        prometheus:
+          servicemonitor:
+            enabled: true
