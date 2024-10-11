@@ -46,6 +46,7 @@ spec:
                 limits:
                     memory: 1Gi
                     cpu: 1
+              serviceMonitorNamespaceSelector: ""
               ruleSelectorNilUsesHelmValues: false
               serviceMonitorSelectorNilUsesHelmValues: true
               podMonitorSelectorNilUsesHelmValues: false
