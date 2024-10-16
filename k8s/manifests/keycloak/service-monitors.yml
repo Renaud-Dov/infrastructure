@@ -8,7 +8,7 @@ spec:
     any: true
   selector:
     matchLabels:
-      app.kubernetes.io/name: keycloak-metrics
+      app: keycloak
   endpoints:
     - port: http
       path: /metrics
