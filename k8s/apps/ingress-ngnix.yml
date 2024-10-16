@@ -34,7 +34,7 @@ spec:
           ingressClassResource:
             name: public
             default: true
-        prometheus:
-          enabled: true
-          serviceMonitor:
+          metrics:
             enabled: true
+            serviceMonitor:
+              enabled: true
