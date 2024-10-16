@@ -46,6 +46,7 @@ spec:
                 limits:
                     memory: 1Gi
                     cpu: 1
+              serviceMonitorSelectorNilUsesHelmValues: false
 #              serviceMonitorSelector: {}
 #              serviceMonitorNamespaceSelector: {}
 #              ruleSelectorNilUsesHelmValues: false
