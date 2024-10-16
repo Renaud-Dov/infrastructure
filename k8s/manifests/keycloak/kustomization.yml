@@ -7,3 +7,4 @@ resources:
   - service.yml
   - ingress.yml
   - secrets.yml
+  - service-monitors.yml
