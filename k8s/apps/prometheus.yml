@@ -46,10 +46,10 @@ spec:
                 limits:
                     memory: 1Gi
                     cpu: 1
-              serviceMonitorSelector: {}
-              serviceMonitorNamespaceSelector: {}
-              ruleSelectorNilUsesHelmValues: false
-              serviceMonitorSelectorNilUsesHelmValues: false
-              podMonitorSelectorNilUsesHelmValues: false
-              probeSelectorNilUsesHelmValues: false
-              scrapeConfigSelectorNilUsesHelmValues: false
+#              serviceMonitorSelector: {}
+#              serviceMonitorNamespaceSelector: {}
+#              ruleSelectorNilUsesHelmValues: false
+#              serviceMonitorSelectorNilUsesHelmValues: false
+#              podMonitorSelectorNilUsesHelmValues: false
+#              probeSelectorNilUsesHelmValues: false
+#              scrapeConfigSelectorNilUsesHelmValues: false
