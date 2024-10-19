@@ -27,16 +27,22 @@ spec:
   postgresql:
     version: "14"
   env:
-    - name: wal_s3_bucket
+    - name: WAL_S3_BUCKET
+      value: postgres-backup
+    - name: WALE_S3_ENDPOINT
+      value: "https+path://s3.bugbear.fr:443"
+    - name: WALE_DISABLE_S3_SSE
+      value: "true"
+    - name: AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
           name: minio-postgres-creds
-          key: minio_bucket
-    - name: minio_secret_key
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
       valueFrom:
         secretKeyRef:
           name: minio-postgres-creds
-          key: minio_secret_key
+          key: AWS_SECRET_ACCESS_KEY
   sidecars:
     - name: "exporter"
       image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
