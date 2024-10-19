@@ -26,6 +26,17 @@ spec:
     keycloak: keycloak.keycloak
   postgresql:
     version: "14"
+  env:
+    - name: wal_s3_bucket
+      valueFrom:
+        secretKeyRef:
+          name: minio-postgres-creds
+          key: minio_bucket
+    - name: minio_secret_key
+      valueFrom:
+        secretKeyRef:
+          name: minio-postgres-creds
+          key: minio_secret_key
   sidecars:
     - name: "exporter"
       image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
