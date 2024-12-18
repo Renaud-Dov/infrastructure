@@ -10,24 +10,7 @@ terraform {
     }
   }
 
-  # TODO: Fix the backend configuration
-#   backend "s3" {
-#
-#     endpoints = {
-#       s3 = "https://s3.bugbear.fr"
-#     }
-#     bucket = "terraform-state-bugbear"
-#     key    = "terraform.tfstate"
-#     region = "default"
-#
-#     use_path_style              = true
-#     skip_requesting_account_id  = true
-#     skip_credentials_validation = true
-#     skip_metadata_api_check     = true
-#     skip_region_validation      = true
-#     skip_s3_checksum            = true
-#
-#   }
+  backend "http" {}
 }
 
 

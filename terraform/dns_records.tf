@@ -1,7 +1,3 @@
-data "cloudflare_zone" "this" {
-  name = var.domain_name
-}
-
 resource "cloudflare_record" "srv1" {
   zone_id = data.cloudflare_zone.this.id
   name    = "srv1"
@@ -9,18 +5,18 @@ resource "cloudflare_record" "srv1" {
   content = "23.88.110.202"
 }
 
-resource "cloudflare_record" "srv2" {
+resource "cloudflare_record" "poseidon" {
   zone_id = data.cloudflare_zone.this.id
   name    = "srv2"
   type    = "A"
   content = "78.47.99.230"
 }
 
-resource "cloudflare_record" "srv3" {
+resource "cloudflare_record" "hera" {
   zone_id = data.cloudflare_zone.this.id
-  name    = "srv3"
+  name    = "hera.srv.bugbear.fr"
   type    = "A"
-  content = "195.201.125.20"
+  content = "23.88.42.76"
 }
 
 
