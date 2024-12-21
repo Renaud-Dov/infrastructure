@@ -26,11 +26,9 @@ provider "vault" {
   }
 }
 
-data "vault_generic_secret" "cloudflare" {
-  path = "secret/terraform/cloudflare"
-}
 
 provider "cloudflare" {
-  api_token = data.vault_generic_secret.cloudflare.data.api_token
+  api_token = var.cloudflare_token
+}
 
 }
