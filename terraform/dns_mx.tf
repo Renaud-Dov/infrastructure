@@ -1,17 +1,17 @@
 resource "cloudflare_record" "mail_mx" {
-  zone_id = data.cloudflare_zone.this.id
-  name    = "@"
-  type    = "MX"
-  content = "mail.protonmail.ch"
+  zone_id  = data.cloudflare_zone.this.id
+  name     = "@"
+  type     = "MX"
+  content  = "mail.protonmail.ch"
   priority = 10
 
 }
 
 resource "cloudflare_record" "mailsec_mx" {
-  zone_id = data.cloudflare_zone.this.id
-  name    = "@"
-  type    = "MX"
-  content = "mailsec.protonmail.ch"
+  zone_id  = data.cloudflare_zone.this.id
+  name     = "@"
+  type     = "MX"
+  content  = "mailsec.protonmail.ch"
   priority = 20
 }
 

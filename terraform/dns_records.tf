@@ -6,17 +6,19 @@ resource "cloudflare_record" "srv1" {
 }
 
 resource "cloudflare_record" "poseidon" {
-  zone_id = data.cloudflare_zone.this.id
-  name    = "srv2"
-  type    = "A"
-  content = "78.47.99.230"
+  zone_id    = data.cloudflare_zone.this.id
+  name       = "srv2"
+  type       = "A"
+  content    = hcloud_primary_ip.poseidon.ip_address
+  depends_on = [hcloud_primary_ip.poseidon]
 }
 
 resource "cloudflare_record" "hera" {
-  zone_id = data.cloudflare_zone.this.id
-  name    = "hera.srv.bugbear.fr"
-  type    = "A"
-  content = "23.88.42.76"
+  zone_id    = data.cloudflare_zone.this.id
+  name       = "hera.srv.bugbear.fr"
+  type       = "A"
+  content    = hcloud_primary_ip.hera.ip_address
+  depends_on = [hcloud_primary_ip.hera]
 }
 
 
@@ -84,7 +86,7 @@ resource "cloudflare_record" "status" {
   proxied = true
 }
 
-  resource "cloudflare_record" "vault" {
+resource "cloudflare_record" "vault" {
   zone_id = data.cloudflare_zone.this.id
   name    = "vault"
   type    = "CNAME"
