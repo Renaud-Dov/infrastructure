@@ -43,6 +43,11 @@ spec:
         secretKeyRef:
           name: minio-postgres-creds
           key: AWS_SECRET_ACCESS_KEY
+  additionalVolumes:
+    - name: pgbackup
+      mountPath: /home/postgres/pgbackup
+      volumeSource:
+        emptyDir: { }
   sidecars:
     - name: "exporter"
       image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
