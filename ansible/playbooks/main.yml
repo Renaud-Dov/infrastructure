@@ -1,0 +1,4 @@
+---
+
+-  import_playbook: sshd-config.yml
+-  import_playbook: shell.yml

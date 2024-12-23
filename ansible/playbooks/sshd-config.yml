@@ -1,0 +1,7 @@
+---
+
+- hosts: servers
+  roles:
+    - sshd-config
+  tags:
+    - sshd

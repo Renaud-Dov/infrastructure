@@ -1,0 +1,8 @@
+---
+
+- name: Set sshd_config
+  template:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    mode: 0644
+  notify: restart sshd

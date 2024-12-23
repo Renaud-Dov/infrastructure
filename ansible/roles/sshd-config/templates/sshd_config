@@ -1,0 +1,11 @@
+UsePAM yes
+X11Forwarding no
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem    sftp    /usr/lib/openssh/sftp-server
+ClientAliveInterval 120
+KbdInteractiveAuthentication no
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitRootLogin yes
+Port {{ sshd_port }}

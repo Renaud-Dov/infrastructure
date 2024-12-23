@@ -1,0 +1,31 @@
+---
+
+- name: Install zsh
+  ansible.builtin.package:
+    name: zsh
+    state: present
+
+- name: Copy .zshrc
+  ansible.builtin.copy:
+    src: files/.zshrc
+    dest: /home/{{ ansible_user }}/.
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+
+- name: Install nvim
+  ansible.builtin.package:
+    name: neovim
+    state: present
+
+- name: Remove old nvim config if exists
+  ansible.builtin.synchronize:
+    src: files/nvim
+    dest: /home/{{ ansible_user }}/.config/
+    delete: yes
+    recursive: yes
+    rsync_opts:
+      - "--exclude=init.vim"
+
+

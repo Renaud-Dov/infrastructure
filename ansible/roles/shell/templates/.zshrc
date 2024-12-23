@@ -1,0 +1,1 @@
+export PS1=$'%{\033[1;31m%}/!\\ {{server_name}}%{\033[0m%} %F{cyan}%n@%m %F{yellow}%~ %f$ '
