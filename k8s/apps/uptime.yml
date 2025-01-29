@@ -11,6 +11,8 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+    automated:
+      prune: true
   source:
     repoURL: https://gitlab.com/dov_bugbear/infrastructure.git
     targetRevision: HEAD
