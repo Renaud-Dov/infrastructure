@@ -1,3 +1,15 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "argocd": {
+      "fileMatch": [
+          "^k8s/clusters/apps/.+\\.ya?ml$"
+      ]
+  },
+  "kubernetes": {
+      "fileMatch": ["^k8s/.+\\.ya?ml$"]
+  },
+  "kustomize": {
+      "fileMatch": ["kustomization\\.ya?ml$"]
+  }
+
 }
