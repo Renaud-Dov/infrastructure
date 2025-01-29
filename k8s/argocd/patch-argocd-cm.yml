@@ -11,6 +11,6 @@ data:
   oidc.config: |
     name: Keycloak
     issuer: https://auth.bugbear.fr/realms/bugbear
-    clientID: argocd
+    clientID: $oidc.keycloak.clientId
     clientSecret: $oidc.keycloak.clientSecret
     requestedScopes: ["openid", "profile", "email", "groups"]

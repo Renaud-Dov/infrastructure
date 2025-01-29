@@ -8,6 +8,7 @@ resources:
   - ingress.yml
   - apps.yml
   - service-monitors.yml
+  - argocd-secret.yml
 
 patches:
   - path: patch-argocd-cm.yml
