@@ -18,8 +18,6 @@ spec:
                   value: debug
                 - name: RENOVATE_CONFIG_FILE
                   value: /etc/renovate/config.json
-                - name: RENOVATE_BASE_DIR
-                  value: /renovate
                 - name: RENOVATE_TOKEN
                   valueFrom:
                     secretKeyRef:
