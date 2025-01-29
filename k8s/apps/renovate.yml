@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: renovate
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: renovate
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  source:
+    repoURL: https://gitlab.com/dov_bugbear/infrastructure.git
+    targetRevision: HEAD
+    path: k8s/manifests/renovate

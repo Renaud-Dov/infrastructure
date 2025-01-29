@@ -12,7 +12,6 @@ resources:
   - hermes.yml
   - postgres.yml
   - grafana.yml
-#  - external-dns.yml
   - portfolio.yml
   - prometheus.yml
   - loki.yml
@@ -24,3 +23,4 @@ resources:
   - openldap.yml
   - vault.yml
   - vault-secrets-operator.yml
+  - renovate.yml

@@ -1,0 +1,7 @@
+{
+  "platform": "gitlab",
+  "autodiscover": true,
+  "prHourlyLimit": 0,
+  "reviewers": ["@dov_bugbear"],
+  "repositoryCache": "enabled"
+}
