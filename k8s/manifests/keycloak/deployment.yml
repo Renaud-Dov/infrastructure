@@ -33,8 +33,10 @@ spec:
                 secretKeyRef:
                   name: keycloak-admin-pwd
                   key: password
-            - name: KC_PROXY
-              value: "edge"
+            - name: KC_PROXY_HEADERS
+              value: "xforwarded"
+            - name: KC_HTTP_ENABLED
+              value: "true"
             - name: KC_HOSTNAME
               value: "auth.bugbear.fr"
             - name: KC_DB
