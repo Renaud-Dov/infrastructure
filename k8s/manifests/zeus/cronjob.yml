@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zeus-discord
+spec:
+  schedule: '*/5 09-22 * * *'
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: zeus-cron-acdc
+            image: ghcr.io/renaud-dov/calendar_cron:master
+            imagePullPolicy: Always
+            env:
+              - name: DB_HOST
+                value: bugbear-main-cluster.postgres.svc.cluster.local
+              - name: DB_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: zeus.cron.bugbear-main-cluster.credentials
+                    key: username
+              - name: DB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: zeus.cron.bugbear-main-cluster.credentials
+                    key: password
+              - name: DB_DATABASE
+                value: zeus
+              - name: ICS_URL
+                valueFrom:
+                  secretKeyRef:
+                      name: zeus-secrets
+                      key: ICS_URL
+              - name: GROUP
+                value: ACDC
+              - name: FILTER_REGEX
+                value: Programmation
+              - name: WEBHOOK_URLS
+                valueFrom:
+                  secretKeyRef:
+                    name: zeus-secrets
+                    key: DISCORD_WEBHOOK_ACDC
+          restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+
+

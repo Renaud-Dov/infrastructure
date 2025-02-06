@@ -3,5 +3,5 @@ kind: Kustomization
 namespace: zeus
 
 resources:
-  - deployment.yml
+  - cronjob.yml
   - secrets.yml
