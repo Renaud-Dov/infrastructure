@@ -24,6 +24,9 @@ resource "hcloud_server" "hera" {
     ip         = "10.0.1.2"
   }
 
+  delete_protection  = true
+  rebuild_protection = true
+
   lifecycle {
     # We dont want the server to be replaced due to changes in the ssh_keys
     ignore_changes = [ssh_keys]
