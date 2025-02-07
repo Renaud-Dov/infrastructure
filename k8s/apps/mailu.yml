@@ -1,0 +1,77 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mailu
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: mailu
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: mailu
+  project: default
+  source:
+    repoURL: https://mailu.github.io/helm-charts/
+    chart: mailu
+    targetRevision:  2.1.2
+    helm:
+      values: |
+        fullnameOverride: mailu
+        hostnames:
+          - mx1.bugbear.fr
+        domain: mail.bugbear.fr
+        global:
+          database:
+            roundcube:
+              username: mailu.mailu
+              existingSecret: mailu.mailu.bugbear-main-cluster.credentials
+              existingSecretPasswordKey: password
+        initialAccount:
+          enabled: true
+          username: admin
+          domain: mail.bugbear.fr
+        persistence:
+          size: 1Gi
+        ingress:
+          annotations:
+            cert-manager.io/cluster-issuer: default-issuer
+        admin:
+          persistence:
+            size: 1Gi
+        redis:
+          persistence:
+            size: 4Gi
+        postfix:
+          persistence:
+            size: 1Gi
+        dovecot:
+          persistence:
+            size: 1Gi
+        rspamd:
+          persistence:
+            size: 1Gi
+        webmail:
+          persistence:
+            size: 1Gi
+
+        externalDatabase:
+          enabled: true
+          type: postgresql
+          host: bugbear-main-cluster.postgres.svc.cluster.local
+          port: 5432
+          database: mailu
+          username: mailu.mailu 
+          existingSecret: mailu.mailu.bugbear-main-cluster.credentials
+
+
+
+---
+
