@@ -24,3 +24,4 @@ resources:
   - vault.yml
   - vault-secrets-operator.yml
   - renovate.yml
+  - mailu.yml

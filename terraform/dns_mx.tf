@@ -35,3 +35,19 @@ resource "cloudflare_record" "protonmail3_domainkey" {
   type    = "CNAME"
   content = "protonmail3.domainkey.dfjualtqrvxy5yfxd7awdgyecrj3klzhpwi4ixjtufbs46hjds3fq.domains.proton.ch."
 }
+
+resource "cloudflare_record" "mx1" {
+  zone_id = data.cloudflare_zone.this.id
+  name    = "mx1"
+  type    = "CNAME"
+  content = cloudflare_record.poseidon.hostname
+  proxied = false
+}
+
+resource "cloudflare_record" "mail_bugbear_mx" {
+  zone_id  = data.cloudflare_zone.this.id
+  name     = "@"
+  type     = "MX"
+  content  = cloudflare_record.mx1.hostname
+  priority = 30
+}

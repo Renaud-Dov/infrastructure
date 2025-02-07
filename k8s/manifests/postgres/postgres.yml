@@ -17,6 +17,7 @@ spec:
     zeus.cron: []
     grafana.ro: []
     keycloak.keycloak: []
+    mailu.mailu: []
 
   # databases: name -> owner
   databases:
@@ -24,6 +25,7 @@ spec:
     hermes2: hermes.hermes
     zeus: zeus.cron
     keycloak: keycloak.keycloak
+    mailu: mailu.mailu
   postgresql:
     version: "14"
   env:
