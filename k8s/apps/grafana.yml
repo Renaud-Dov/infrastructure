@@ -52,9 +52,9 @@ spec:
             auto_assign_org_role: Viewer
           smtp:
             enabled: true
-            host: mailu-postfix.mailu.svc.cluster.local:587
+            host: mailu-postfix.mailu.svc.cluster.local:25
             from_address: no-reply@mail.bugbear.fr
-            startTLS_policy: MandatoryStartTLS
+            #            startTLS_policy: MandatoryStartTLS
 
           auth:
             oauth_auto_login: false
