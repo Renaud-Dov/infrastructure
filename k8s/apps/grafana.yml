@@ -22,7 +22,7 @@ spec:
     chart: grafana
     targetRevision: 7.0.6
     helm:
-      values:
+      values: |
         fullnameOverride: grafana
         replicas: 1
         resources:
