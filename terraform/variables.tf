@@ -3,6 +3,10 @@ variable "domain_name" {
   default = "bugbear.fr"
 }
 
+variable "cloudflare_account_id" {
+  type = string
+}
+
 variable "role_id" {
   type = string
 }
