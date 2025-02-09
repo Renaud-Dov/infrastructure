@@ -57,9 +57,13 @@ spec:
                   key: password
             - name: KC_METRICS_ENABLED
               value: "true"
+            - name: KC_HEALTH_ENABLED
+              value: "true"
           ports:
             - name: http
               containerPort: 8080
+            - name: health
+              containerPort: 9000
           resources:
             requests:
               memory: "512Mi"
@@ -69,5 +73,16 @@ spec:
               cpu: "500m"
           readinessProbe:
             httpGet:
-              path: /realms/master
-              port: 8080
+              path: /health/ready
+              port: 9000
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 9000
+          startupProbe:
+            httpGet:
+              path: /health/started
+              port: 9000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 12
