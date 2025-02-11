@@ -25,11 +25,20 @@ spec:
       values: |
         replicaCount: 1
         minecraftServer:
-          eula: "TRUE"
+          eula: "true"
           version: "1.21.4"
+          memory: 2048M
+          rcon:
+            enabled: true
+            withGeneratedPassword: true
+          levelSeed: '1606377695512438131'
         resources:
           limits:
-            cpu: 1
+            cpu: 2
             memory: 2Gi
         startupProbe:
           enabled: false
+        persistence:
+          dataDir:
+            enabled: true
+            Size: 5Gi
