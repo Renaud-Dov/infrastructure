@@ -19,10 +19,10 @@ spec:
   project: default
   source:
     repoURL: https://itzg.github.io/minecraft-server-charts/
-    chart: mailu
+    chart: minecraft
     targetRevision: 4.23.7
     helm:
-      values:
+      values: |
         replicaCount: 1
         minecraftServer:
           eula: "TRUE"
