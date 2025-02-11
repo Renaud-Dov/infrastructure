@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mc-server
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: mc-server
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+  destination:
+    name: in-cluster
+    namespace: mc-server
+  project: default
+  source:
+    repoURL: https://itzg.github.io/minecraft-server-charts/
+    chart: mailu
+    targetRevision: 4.23.7
+    helm:
+      values:
+        replicaCount: 1
+        minecraftServer:
+          eula: "TRUE"
+          version: "1.21.4"
+        resources:
+          limits:
+            cpu: 1
+            memory: 2Gi
