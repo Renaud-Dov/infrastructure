@@ -20,7 +20,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:26.1.0
+          image: quay.io/keycloak/keycloak:26.1.2
           args: [ "start" ]
           env:
             - name: KEYCLOAK_ADMIN
