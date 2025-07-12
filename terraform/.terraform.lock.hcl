@@ -20,22 +20,32 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
 }
 
 provider "registry.terraform.io/hashicorp/vault" {
-  version     = "3.8.2"
-  constraints = "3.8.2"
+  version     = "5.1.0"
+  constraints = "5.1.0"
   hashes = [
-    "h1:v49zBYXmqCit5CZ1tIExBka0lKTMD1paMX0FdmpTv1o=",
-    "zh:3dd0f4f12f5a479941422bc413ea147a76253c9d1bdb8dd2d098146c80f90aa5",
-    "zh:4132382680ec77dda4713fd4701cbc7dcc08ef4742fb997961c3332c30b0ae12",
-    "zh:56eb6b44bdbaf2f3f37a1df35c01405af5cf6eea988f3e6441e4d70391067918",
+    "h1:4f49oEPy8itw4a3gaiL4KizSb3JLlWHmCXAcIeBnCIw=",
+    "h1:67ApD30CW14kRUWvVLLvriHwGE8fs196tjQ6vkxcql0=",
+    "h1:QGm/wrQ9kPNjIskBYnISy/Byyb+dgIzKziOlJXs5P+U=",
+    "h1:WIsdWWcgxhWhdhVgjx8U/7icTKyvcAzcgOg9fZ5yl1s=",
+    "h1:WrCFe7kCl1rgQCnB2LZdg3/Rv+AT+awA+xRpRNPCpIU=",
+    "h1:XOP2QPWRY2C2QPe2dISqgqWo++OdSZ9lSNSpfY47Alg=",
+    "h1:cJmZOfJSwA7ddEkndUkhMLVFNBAVwhpzdZ65SmCqELU=",
+    "h1:g8ntFB0LhOKKhrkTBUbRIJTkoesIqKRJ0Cpc9aS3rd0=",
+    "h1:kmdbXYMw6RArrzxz4wqZ38yDNlltSeIYtf5Dd2RPudE=",
+    "h1:vIjSvQ6ZxMrImasK4H6mO7WgdyEFXtIBu607o02BGxE=",
+    "h1:x9cfzSpsdqUfrKM4qD/Mfqvy66ZWKrLtA+PZx7HhqZ8=",
+    "zh:121c84975a3732d2c68db6b555c37a4520f3c283fd916e25e472e784518662a7",
+    "zh:2a80da4424db091d3b9846a569b0ae3e60f3e95b0a988ff94f3986391a62c93d",
+    "zh:2bcb3aadf97aecf0b9f98393affd766b929eafd3cb68ed4f26419405c3e8ec64",
+    "zh:5a5f11db49784e9be251fbad2bb3a46c5f9999ab4e1ea7940f120b3743afca28",
     "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
-    "zh:7e5f78948af1118a870d1caeabaff6dd72ad3f17c08c7ce986eab0aab9ba5694",
-    "zh:8648ec617934ee880ce453011e9d8e2070a6db1b34ce11c007511f9399624d98",
-    "zh:b2ded1dc6fd8c63dadd160a3360fb717f6808b5ad058be2af162be170aaefc3a",
-    "zh:b88850e96c489dc8b5c66682bd166d6bb4a02cd6e943ba1d411cab911efd9487",
-    "zh:c22c108bd60fd1af3b6fbea65018b069f731c95b1fb3900a052cef2b7fe2341f",
-    "zh:c834ee80617c08f670826c8e566fcb01b30986ce996fbfc6fc3e9d838ced4d5f",
-    "zh:cd4e6ecf2925915ad83cbdb962f8af65a70aebf5811fafe3f16cba69c1b39a6b",
-    "zh:f6d39c4d3861ff682969a1fe4b960b7a27eda49c5a9747f20e24c56f3817a4cd",
+    "zh:976b000cf6fa75c33c3b3a3c2e5c67a8c1958744b0521a1f807de9f8855dc961",
+    "zh:a4321ce4ff9422d90c3c85bb4835a84563eb761d0714d1db9c81ca810a48fd7c",
+    "zh:a7464751eaf0b9cc7afb03e098d7efcf8c559215f3de7f34a56458e75709c94d",
+    "zh:ae434febd2590e58040308d18bf772f796b2fad90670be263acdd447db8fb106",
+    "zh:c61a27d8c9daa483feb4e3fecd42fa9f2887c5588433bb15df6d62572a7bb6f4",
+    "zh:dd2e8bdc76f09f8a47485d129140cd6126ad722014f6704ad5d8c4f18014571d",
+    "zh:f15d32b1eaeb419533e586b0c2c1e2b2f732925b3a094e31e9669cd6e6e735f0",
   ]
 }
 

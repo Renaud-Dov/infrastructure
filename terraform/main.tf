@@ -6,7 +6,7 @@ terraform {
     }
     vault = {
       source  = "hashicorp/vault"
-      version = "3.8.2"
+      version = "5.1.0"
     }
     hcloud = {
       source  = "hetznercloud/hcloud"
